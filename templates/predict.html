@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWSkills Mini-Hackathon: Predict Recycling Rate</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&family=Open+Sans:wght@400;600&family=Times+New+Roman&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 16px;
+        }
+        .header-bg {
+            background-color: #e6f3e6;
+            border-bottom: 2px solid #2e7d32;
+        }
+        .main-section {
+            background-color: #f1f8f9;
+            padding: 3rem 0;
+        }
+        .accessibility-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            z-index: 1000;
+            font-family: 'Open Sans', sans-serif;
+        }
+        .accessibility-btn:hover + .accessibility-menu, .accessibility-menu:hover {
+            display: block;
+        }
+        h1, h2 {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+        }
+        .nav-link {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+        }
+        p, ul, li, label, input, select {
+            font-family: 'Times New Roman', Times, serif;
+            text-align: justify;
+        }
+        .header-logos {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .navbar-nav {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+        .ctl {
+            width: 100%;
+            padding: 0.6rem 0.75rem;
+            border-radius: 0.5rem;
+            background: #f1f5f9;
+            color: #1a202c;
+            border: 1px solid #cbd5e1;
+        }
+        .ctl:focus {
+            outline: none;
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.35);
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #06b6d4, #22c55e);
+            color: #fff;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .btn-secondary {
+            background: #64748b;
+            color: #fff;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid #cbd5e1;
+            color: #1a202c;
+            padding: 0.7rem 1.2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .prediction {
+            background: rgba(15,23,42,0.55);
+            border: 1px solid rgba(30,41,59,0.8);
+            border-radius: 0.75rem;
+            padding: 1rem;
+        }
+        .subtle {
+            color: #475569;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Header Section -->
+    <div class="header-bg">
+        <div class="container mx-auto px-4 py-2">
+            <div class="flex flex-wrap justify-between items-center">
+                <div class="flex space-x-4">
+                    <ul class="flex space-x-4 text-sm">
+                        <li>
+                            <a href="https://pwskills.com/" target="_blank" class="text-green-700 hover:text-green-900" title="PWSkills Home" rel="noopener noreferrer">PWSkills Home</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex space-x-4 items-center">
+                    <a href="#skipCont" class="text-green-700 hover:text-green-900" title="Skip to main content">Skip to main content</a>
+                    <div class="relative">
+                        <button class="accessibility-btn text-green-700 hover:text-green-900" title="Accessibility Tools">
+                            <i class="fas fa-universal-access"></i>
+                        </button>
+                        <div class="accessibility-menu hidden p-4">
+                            <div class="font-bold mb-2">Accessibility Tools</div>
+                            <button class="block mb-2 text-sm" onclick="document.body.classList.toggle('high-contrast')">High Contrast</button>
+                            <button class="block mb-2 text-sm" onclick="document.body.classList.toggle('dark-contrast')">Dark Contrast</button>
+                            <div class="font-bold mb-2">Text Size</div>
+                            <button class="block mb-2 text-sm" onclick="document.body.style.fontSize='1.2em'">Increase Text</button>
+                            <button class="block mb-2 text-sm" onclick="document.body.style.fontSize='0.8em'">Decrease Text</button>
+                            <button class="block mb-2 text-sm" onclick="document.body.style.fontSize='1em'">Reset Text</button>
+                            <a href="https://pwskills.com/accessibility" target="_blank" class="block text-sm">Screen Reader</a>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/pwskills" target="_blank" class="text-green-700" title="Facebook" rel="noopener noreferrer">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://x.com/pwskills" target="_blank" class="text-green-700" title="Twitter" rel="noopener noreferrer">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@pwskills" target="_blank" class="text-green-700" title="YouTube" rel="noopener noreferrer">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="https://www.instagram.com/pwskills" target="_blank" class="text-green-700" title="Instagram" rel="noopener noreferrer">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <header class="bg-white shadow">
+            <div class="container mx-auto px-4 py-4">
+                <div class="header-logos">
+                    <a href="/home" class="flex items-center">
+                        <img src="https://couponzania.com/wp-content/uploads/2025/02/PW-Skills-Logo.webp" alt="PW Skills Logo" class="w-48">
+                    </a>
+                    <div class="flex items-center">
+                        <img src="https://swachhbharatmission.ddws.gov.in/themes/custom/repo-theme-master/images/swach-bharat.png" alt="Swachh Bharat" class="w-24">
+                    </div>
+                </div>
+            </div>
+            <nav class="navbar navbar-expand-lg navbar-light bg-green-50">
+                <div class="container mx-auto px-4">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/train">Train Model</a></li>
+                            <li class="nav-item"><a class="nav-link active" href="/predict">Predict</a></li>
+                            <li class="nav-item"><a class="nav-link" href="https://pwskills.com/register" target="_blank">Register</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </div>
+
+    <!-- Main Content: Prediction Section -->
+    <main id="skipCont" class="main-section">
+        <div class="container mx-auto px-4 py-8">
+            <h1 class="text-3xl text-green-800 mb-6 text-center">Predict Recycling Rate</h1>
+            <p class="text-gray-700 mb-4 text-justify">
+                Use the form below to predict the recycling rate for a specific city based on waste management attributes, or upload a CSV file for batch predictions.
+            </p>
+            <div class="card bg-white shadow rounded-lg p-6">
+                <h2 class="text-xl text-blue-700 mb-4 text-center">Enter City & Waste Details</h2>
+                <form id="predictForm" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block mb-2 text-sm">City/District</label>
+                        <input class="ctl" type="text" name="city" value="Mumbai" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm">Waste Type</label>
+                        <select class="ctl" name="waste_type" required>
+                            <option value="Plastic">Plastic</option>
+                            <option value="Organic">Organic</option>
+                            <option value="E-Waste">E-Waste</option>
+                            <option value="Construction">Construction</option>
+                            <option value="Hazardous">Hazardous</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm">Disposal Method</label>
+                        <select class="ctl" name="disposal_method" required>
+                            <option value="Landfill">Landfill</option>
+                            <option value="Recycling">Recycling</option>
+                            <option value="Incineration">Incineration</option>
+                            <option value="Composting">Composting</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm">Waste Generated (Tons/Day)</label>
+                        <input class="ctl" type="number" step="any" name="waste_generated" value="450" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm">Population Density (People/km²)</label>
+                        <input class="ctl" type="number" step="any" name="population_density" value="30000" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm">Efficiency Score (1–10)</label>
+                        <input class="ctl" type="number" min="1" max="10" step="1" name="efficiency_score" value="5" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm">Cost (₹/Ton)</label>
+                        <input class="ctl" type="number" step="any" name="cost" value="1500" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm">Awareness Campaigns</label>
+                        <input class="ctl" type="number" step="any" name="campaigns" value="12" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm">Landfill Capacity (Tons)</label>
+                        <input class="ctl" type="number" step="any" name="landfill_capacity" value="50000" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm">Year</label>
+                        <input class="ctl" type="number" step="1" name="year" value="2024" required />
+                    </div>
+                    <div class="md:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block mb-2 text-sm">Landfill Name (optional)</label>
+                            <input class="ctl" type="text" name="landfill_name" placeholder="Deonar" />
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm">Landfill Location (Lat, Long)</label>
+                            <input class="ctl" type="text" name="landfill_location" placeholder="19.061, 72.928" />
+                        </div>
+                    </div>
+                    <div class="md:col-span-3 flex justify-end gap-3 pt-2">
+                        <button type="submit" id="predictBtn" class="btn-primary">Predict</button>
+                        <button type="button" id="clearBtn" class="btn-secondary">Clear</button>
+                    </div>
+                </form>
+                <div class="prediction mt-6">
+                    <h3 class="text-lg text-green-700 mb-1 text-center">Predicted Recycling Rate</h3>
+                    <div class="flex items-end gap-3 justify-center">
+                        <p id="predictionResult" class="text-3xl font-extrabold">N/A</p>
+                        <span id="predictionNote" class="text-xs subtle"></span>
+                    </div>
+                    <p class="text-xs mt-2 subtle text-center">This estimate is produced by your hybrid model pipeline.</p>
+                </div>
+                <div class="mt-10">
+                    <h2 class="text-xl text-blue-700 mb-3 text-center">Batch Prediction (CSV upload)</h2>
+                    <p class="text-sm subtle mb-3 text-justify">
+                        Upload a CSV file with the required columns: City/District, Waste Type, Disposal Method, Waste Generated, Population Density, Efficiency Score, Cost, Awareness Campaigns, Landfill Capacity, Year, Landfill Name (optional), Landfill Location (optional).
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <input id="csvFile" type="file" accept=".csv" class="ctl" />
+                        <button id="batchBtn" class="btn-primary">Upload & Predict</button>
+                    </div>
+                    <div id="batchMsg" class="text-sm mt-3 subtle"></div>
+                    <div id="batchLinkWrap" class="mt-2"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-green-800 text-white py-4">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 PWSkills. All rights reserved.</p>
+            <p>
+                <a href="https://pwskills.com/" class="text-green-200 hover:text-white">PWSkills</a> |
+                <a href="https://swachhbharatmission.ddws.gov.in/" class="text-green-200 hover:text-white">Swachh Bharat Mission</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Accessibility toggle functionality
+        document.body.classList.add('transition-all', 'duration-300');
+        document.querySelector('.high-contrast')?.addEventListener('click', () => {
+            document.body.style.backgroundColor = '#000';
+            document.body.style.color = '#fff';
+        });
+        document.querySelector('.dark-contrast')?.addEventListener('click', () => {
+            document.body.style.backgroundColor = '#333';
+            document.body.style.color = '#fff';
+        });
+
+        // Prediction and batch prediction functionality
+        const form = document.getElementById('predictForm');
+        const predictBtn = document.getElementById('predictBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const batchBtn = document.getElementById('batchBtn');
+        const fileInput = document.getElementById('csvFile');
+        const resultEl = document.getElementById('predictionResult');
+        const noteEl = document.getElementById('predictionNote');
+        const batchMsg = document.getElementById('batchMsg');
+        const batchLinkWrap = document.getElementById('batchLinkWrap');
+
+        function toJSON(formEl) {
+            const data = Object.fromEntries(new FormData(formEl).entries());
+            ['waste_generated', 'population_density', 'efficiency_score', 'cost', 'campaigns', 'landfill_capacity', 'year']
+                .forEach(k => data[k] = data[k] === '' ? null : Number(data[k]));
+            return data;
+        }
+
+        function setBusy(btn, busy, textBusy = 'Working...') {
+            if (!btn) return;
+            btn.disabled = !!busy;
+            if (busy) {
+                btn.dataset.label = btn.textContent;
+                btn.textContent = textBusy;
+            } else {
+                btn.textContent = btn.dataset.label || btn.textContent;
+            }
+        }
+
+        function asPercent(x) {
+            const v = Number(x);
+            if (isNaN(v)) return 'N/A';
+            return (Math.round(v * 100) / 100).toFixed(2) + ' %';
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            noteEl.textContent = '';
+            setBusy(predictBtn, true, 'Predicting...');
+            try {
+                const payload = toJSON(form);
+                const res = await fetch('/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (!res.ok || data.status !== 'success') throw new Error(data.message || 'Prediction failed');
+                resultEl.textContent = asPercent(data.recycling_rate);
+            } catch (err) {
+                resultEl.textContent = 'N/A';
+                noteEl.textContent = '(prediction failed)';
+                console.error(err);
+            } finally {
+                setBusy(predictBtn, false);
+            }
+        });
+
+        clearBtn.addEventListener('click', () => {
+            form.reset();
+            resultEl.textContent = 'N/A';
+            noteEl.textContent = '';
+        });
+
+        batchBtn.addEventListener('click', async () => {
+            const file = fileInput.files?.[0];
+            if (!file) {
+                batchMsg.textContent = 'Please choose a CSV file.';
+                return;
+            }
+            setBusy(batchBtn, true, 'Uploading...');
+            batchMsg.textContent = '';
+            batchLinkWrap.innerHTML = '';
+            try {
+                const fd = new FormData();
+                fd.append('file', file);
+                const res = await fetch('/batch_predict', { method: 'POST', body: fd });
+                const data = await res.json();
+                if (data.status !== 'success') throw new Error(data.message || 'Batch prediction failed');
+                batchMsg.textContent = data.message;
+                if (data.download_link) {
+                    const a = document.createElement('a');
+                    a.href = data.download_link;
+                    a.textContent = 'Download predictions CSV';
+                    a.className = 'text-blue-400 underline';
+                    a.download = '';
+                    batchLinkWrap.appendChild(a);
+                }
+            } catch (e) {
+                batchMsg.textContent = e.message || 'Batch prediction failed';
+            } finally {
+                setBusy(batchBtn, false);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recycling Rate Predictor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg: #f8fafc;             /* light */
+      --text: #0f172a;
+      --muted: #475569;
+      --card: #ffffff;
+      --field: #f1f5f9;
+      --field-border: #cbd5e1;
+      --chip: #0f172a;
+    }
+    html[data-theme="dark"] {
+      --bg: #0b1326;             /* dark outer */
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --card: rgb(19,25,50);     /* ✅ inner box */
+      --field: rgb(45,55,72);
+      --field-border: rgb(74,85,104);
+      --chip: #0f172a;
+    }
+    body { background: var(--bg); color: var(--text); font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial; }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1rem 3rem; }
+    .card { background: var(--card); border-radius: 1rem; box-shadow: 0 8px 24px rgba(0,0,0,.35); padding: 2rem; }
+    .ctl { width: 100%; padding: .6rem .75rem; border-radius: .5rem; background: var(--field); color: var(--text); border: 1px solid var(--field-border); }
+    .ctl:focus { outline: none; border-color: #60a5fa; box-shadow: 0 0 0 3px rgba(59,130,246,.35); }
+    .btn { border: 0; border-radius: .75rem; padding: .7rem 1.2rem; font-weight: 600; cursor: pointer; transition: transform .08s, opacity .2s; }
+    .btn:disabled { opacity: .6; cursor: not-allowed; }
+    .btn:active { transform: translateY(1px); }
+    .btn-primary { background: linear-gradient(90deg,#06b6d4,#22c55e); color: #fff; }
+    .btn-secondary { background: #64748b; color: #fff; }
+    .btn-ghost { background: transparent; border: 1px solid var(--field-border); color: var(--text); }
+    .prediction { background: rgba(15,23,42,.55); border: 1px solid rgba(30,41,59,.8); border-radius: .75rem; padding: 1rem; }
+    .subtle { color: var(--muted); }
+    .chip { background: var(--chip); color: #e2e8f0; border: 1px solid #1e293b; border-radius: .75rem; padding: .35rem .6rem; font-size: .8rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center gap-3">
+        <div class="chip">♻</div>
+        <div>
+          <h1 class="text-2xl font-bold text-green-400">Recycling Rate Predictor</h1>
+          <p class="text-sm subtle">Estimate city-level recycling rates using ML</p>
+        </div>
+      </div>
+      <button id="themeBtn" class="btn btn-ghost px-3 py-2 rounded-md" title="Toggle theme">🌙 Dark</button>
+    </div>
+
+    <div class="card">
+      <h2 class="text-xl mb-4 font-semibold">Enter City & Waste Details</h2>
+
+<form id="predictForm" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <div>
+    <label class="block mb-2 text-sm">City/District</label>
+    <input class="ctl" type="text" name="city" value="Mumbai" required />
+  </div>
+
+  <div>
+    <label class="block mb-2 text-sm">Waste Type</label>
+    <select class="ctl" name="waste_type" required>
+      <option value="Plastic">Plastic</option>
+      <option value="Organic">Organic</option>
+      <option value="E-Waste">E-Waste</option>
+      <option value="Construction">Construction</option>
+      <option value="Hazardous">Hazardous</option>
+    </select>
+  </div>
+
+  <div>
+    <label class="block mb-2 text-sm">Disposal Method</label>
+    <select class="ctl" name="disposal_method" required>
+      <option value="Composting">Composting</option>
+    </select>
+  </div>
+
+  <div>
+    <label class="block mb-2 text-sm">Waste Generated (Tons/Day)</label>
+    <input class="ctl" type="number" step="any" name="waste_generated" value="450" required />
+  </div>
+
+  <div>
+    <label class="block mb-2 text-sm">Population Density (People/km²)</label>
+    <input class="ctl" type="number" step="any" name="population_density" value="30000" required />
+  </div>
+
+  <div>
+    <label class="block mb-2 text-sm">Efficiency Score (1–10)</label>
+    <input class="ctl" type="number" min="1" max="10" step="1" name="efficiency_score" value="5" required />
+  </div>
+
+  <div>
+    <label class="block mb-2 text-sm">Cost (₹/Ton)</label>
+    <input class="ctl" type="number" step="any" name="cost" value="1500" required />
+  </div>
+
+  <div>
+    <label class="block mb-2 text-sm">Awareness Campaigns</label>
+    <input class="ctl" type="number" step="any" name="campaigns" value="12" required />
+  </div>
+
+  <div>
+    <label class="block mb-2 text-sm">Landfill Capacity (Tons)</label>
+    <input class="ctl" type="number" step="any" name="landfill_capacity" value="50000" required />
+  </div>
+
+  <div>
+    <label class="block mb-2 text-sm">Year</label>
+    <input class="ctl" type="number" step="1" name="year" value="2024" required />
+  </div>
+
+  <!-- Optional fields spanning 3 cols -->
+  <div class="md:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+      <label class="block mb-2 text-sm">Landfill Name (optional)</label>
+      <input class="ctl" type="text" name="landfill_name" placeholder="Deonar" />
+    </div>
+    <div>
+      <label class="block mb-2 text-sm">Landfill Location (Lat, Long)</label>
+      <input class="ctl" type="text" name="landfill_location" placeholder="19.061, 72.928" />
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="md:col-span-3 flex justify-end gap-3 pt-2">
+    <button type="submit" id="predictBtn" class="btn btn-primary">Predict</button>
+    <button type="button" id="clearBtn" class="btn btn-secondary">Clear</button>
+    <button type="button" id="trainBtn" class="btn btn-ghost">Train Model</button>
+  </div>
+</form>
+
+
+      <!-- Prediction -->
+      <div class="prediction mt-6">
+        <h3 class="text-lg font-semibold mb-1 text-green-300">Predicted Recycling Rate</h3>
+        <div class="flex items-end gap-3">
+          <p id="predictionResult" class="text-3xl font-extrabold">N/A</p>
+          <span id="predictionNote" class="text-xs subtle"></span>
+        </div>
+        <p class="text-xs mt-2 subtle">This estimate is produced by your hybrid model pipeline.</p>
+      </div>
+
+      <!-- Batch Prediction -->
+      <div class="mt-10">
+        <h2 class="text-xl font-semibold mb-3">Batch Prediction (CSV upload)</h2>
+        <p class="text-sm subtle mb-3">Columns required (either exact names or short HTML names):<br>
+       </p>
+
+        <div class="flex items-center gap-3">
+          <input id="csvFile" type="file" accept=".csv" class="ctl" />
+          <button id="batchBtn" class="btn btn-primary">Upload & Predict</button>
+        </div>
+        <div id="batchMsg" class="text-sm mt-3 subtle"></div>
+        <div id="batchLinkWrap" class="mt-2"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ----- Theme -----
+    const root = document.documentElement;
+    const themeBtn = document.getElementById('themeBtn');
+    function applyTheme(theme) {
+      root.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      themeBtn.textContent = theme === 'dark' ? '🌙 Dark' : '☀️ Light';
+      themeBtn.title = theme === 'dark' ? 'Switch to light' : 'Switch to dark';
+    }
+    applyTheme(localStorage.getItem('theme') || 'dark');
+    themeBtn.addEventListener('click', () => {
+      applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+
+    // ----- Predict / Clear / Train -----
+    const form = document.getElementById('predictForm');
+    const predictBtn = document.getElementById('predictBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const trainBtn = document.getElementById('trainBtn');
+    const resultEl = document.getElementById('predictionResult');
+    const noteEl = document.getElementById('predictionNote');
+
+    function toJSON(formEl) {
+      const data = Object.fromEntries(new FormData(formEl).entries());
+      // cast numbers
+      ['waste_generated','population_density','efficiency_score','cost','campaigns','landfill_capacity','year']
+        .forEach(k => data[k] = data[k] === '' ? null : Number(data[k]));
+      return data;
+    }
+
+    function setBusy(btn, busy, textBusy='Working...') {
+      if (!btn) return;
+      btn.disabled = !!busy;
+      if (busy) {
+        btn.dataset.label = btn.textContent;
+        btn.textContent = textBusy;
+      } else {
+        btn.textContent = btn.dataset.label || btn.textContent;
+      }
+    }
+
+    function asPercent(x) {
+      const v = Number(x);
+      if (isNaN(v)) return 'N/A';
+      return (Math.round(v * 100) / 100).toFixed(2) + ' %';
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      noteEl.textContent = '';
+      setBusy(predictBtn, true, 'Predicting...');
+      try {
+        const payload = toJSON(form);
+        const res = await fetch('/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok || data.status !== 'success') throw new Error(data.message || 'Prediction failed');
+        resultEl.textContent = asPercent(data.recycling_rate);
+      } catch (err) {
+        resultEl.textContent = 'N/A';
+        noteEl.textContent = '(prediction failed)';
+        console.error(err);
+      } finally {
+        setBusy(predictBtn, false);
+      }
+    });
+
+    clearBtn.addEventListener('click', () => {
+      form.reset();
+      resultEl.textContent = 'N/A';
+      noteEl.textContent = '';
+    });
+
+    trainBtn.addEventListener('click', async () => {
+      setBusy(trainBtn, true, 'Training...');
+      try {
+        const res = await fetch('/train', { method: 'POST' });
+        const data = await res.json();
+        alert(data.message || (data.status === 'success' ? 'Training completed' : 'Training failed'));
+      } catch (e) {
+        alert('Could not reach /train. Is the backend running?');
+      } finally {
+        setBusy(trainBtn, false);
+      }
+    });
+
+    // ----- Batch Predict -----
+    const batchBtn = document.getElementById('batchBtn');
+    const fileInput = document.getElementById('csvFile');
+    const batchMsg = document.getElementById('batchMsg');
+    const batchLinkWrap = document.getElementById('batchLinkWrap');
+
+    batchBtn.addEventListener('click', async () => {
+      const file = fileInput.files?.[0];
+      if (!file) {
+        batchMsg.textContent = 'Please choose a CSV file.';
+        return;
+      }
+      setBusy(batchBtn, true, 'Uploading...');
+      batchMsg.textContent = '';
+      batchLinkWrap.innerHTML = '';
+      try {
+        const fd = new FormData();
+        fd.append('file', file);
+        const res = await fetch('/batch_predict', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (data.status !== 'success') throw new Error(data.message || 'Batch prediction failed');
+        batchMsg.textContent = data.message;
+        if (data.download_link) {
+          const a = document.createElement('a');
+          a.href = data.download_link;
+          a.textContent = 'Download predictions CSV';
+          a.className = 'text-blue-400 underline';
+          a.download = '';
+          batchLinkWrap.appendChild(a);
+        }
+      } catch (e) {
+        batchMsg.textContent = e.message || 'Batch prediction failed';
+      } finally {
+        setBusy(batchBtn, false);
+      }
+    });
+  </script>
+</body>
+</html>
