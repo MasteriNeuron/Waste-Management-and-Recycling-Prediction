@@ -1,0 +1,17 @@
+paths:
+  raw_data: datasets/raw/Waste_Management_and_Recycling_India.csv
+  processed_data: datasets/processed/augmented_data.csv
+  model: datasets/processed/trained_model.pkl
+  scaler: datasets/processed/scaler.pkl
+  selector: datasets/processed/selector.pkl
+  model_name: datasets/processed/model_name.pkl
+  results: datasets/processed/hybrid_model_results.csv
+  performance_plot: static/hybrid_model_performance.png
+  feature_importance_plot: static/hybrid_model_feature_importance.png
+  target_encodings: datasets/processed/target_encodings.pkl
+parameters:
+  test_size: 0.2
+  random_state: 42
+  n_features: 40
+
+  
