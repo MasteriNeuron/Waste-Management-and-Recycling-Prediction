@@ -7,7 +7,7 @@ def setup_logger():
     
     # Create file handler
     os.makedirs('logs', exist_ok=True)
-    fh = logging.FileHandler('logs/pipeline.log')
+    fh = logging.FileHandler('logs/pipeline.log',encoding='utf-8')
     fh.setLevel(logging.INFO)
     
     # Create console handler
