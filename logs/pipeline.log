@@ -3540,3 +3540,70 @@ ValueError: could not convert string to float: ''
 2025-09-09 10:37:28,706 - RecyclingPrediction - INFO - Model artifacts loaded successfully.
 2025-09-09 10:37:28,706 - RecyclingPrediction - INFO - Training completed successfully
 2025-09-09 10:37:28,706 - RecyclingPrediction - INFO - Training completed. Best model: Stacking Ensemble, R²: 0.9727
+2025-09-09 12:12:04,861 - RecyclingPrediction - INFO - Loaded configuration from src/config/config.yaml
+2025-09-09 12:12:05,482 - RecyclingPrediction - INFO - Loaded model from datasets/processed/trained_model.pkl
+2025-09-09 12:12:05,484 - RecyclingPrediction - INFO - Loaded model from datasets/processed/scaler.pkl
+2025-09-09 12:12:05,485 - RecyclingPrediction - INFO - Loaded model from datasets/processed/selector.pkl
+2025-09-09 12:12:05,486 - RecyclingPrediction - INFO - Loaded model from datasets/processed/model_name.pkl
+2025-09-09 12:12:05,486 - RecyclingPrediction - INFO - Loaded model from datasets/processed/target_encodings.pkl
+2025-09-09 12:12:05,487 - RecyclingPrediction - INFO - All artifacts loaded successfully
+2025-09-09 12:12:05,487 - RecyclingPrediction - INFO - Model artifacts loaded successfully.
+2025-09-09 12:12:07,525 - RecyclingPrediction - INFO - Loaded configuration from src/config/config.yaml
+2025-09-09 12:12:08,087 - RecyclingPrediction - INFO - Loaded model from datasets/processed/trained_model.pkl
+2025-09-09 12:12:08,088 - RecyclingPrediction - INFO - Loaded model from datasets/processed/scaler.pkl
+2025-09-09 12:12:08,089 - RecyclingPrediction - INFO - Loaded model from datasets/processed/selector.pkl
+2025-09-09 12:12:08,089 - RecyclingPrediction - INFO - Loaded model from datasets/processed/model_name.pkl
+2025-09-09 12:12:08,089 - RecyclingPrediction - INFO - Loaded model from datasets/processed/target_encodings.pkl
+2025-09-09 12:12:08,090 - RecyclingPrediction - INFO - All artifacts loaded successfully
+2025-09-09 12:12:08,090 - RecyclingPrediction - INFO - Model artifacts loaded successfully.
+2025-09-09 12:12:23,344 - RecyclingPrediction - INFO - POST /train
+2025-09-09 12:12:23,344 - RecyclingPrediction - INFO - Initializing training process...
+2025-09-09 12:12:23,344 - RecyclingPrediction - INFO - Loading and preprocessing data...
+2025-09-09 12:12:23,344 - RecyclingPrediction - INFO - Starting data preprocessing...
+2025-09-09 12:12:23,353 - RecyclingPrediction - INFO - Original dataset shape: (850, 13)
+2025-09-09 12:12:23,353 - RecyclingPrediction - INFO - Creating hybrid features...
+2025-09-09 12:12:23,377 - RecyclingPrediction - INFO - Feature engineering completed
+2025-09-09 12:12:23,381 - RecyclingPrediction - INFO - Augmenting data...
+2025-09-09 12:12:26,531 - RecyclingPrediction - INFO - Augmented dataset size: 3400 (from 850)
+2025-09-09 12:12:27,147 - RecyclingPrediction - INFO - Training set shape: (2720, 37), Test set shape: (680, 37)
+2025-09-09 12:12:27,148 - RecyclingPrediction - INFO - Data loaded: 2720 training samples, 680 test samples
+2025-09-09 12:12:27,148 - RecyclingPrediction - INFO - Preparing full dataset for hybrid model...
+2025-09-09 12:12:27,186 - RecyclingPrediction - INFO - Training hybrid model...
+2025-09-09 12:12:27,186 - RecyclingPrediction - INFO - Starting model training...
+2025-09-09 12:12:27,186 - RecyclingPrediction - INFO - Training LightGBM...
+2025-09-09 12:12:28,977 - RecyclingPrediction - INFO - LightGBM R²: 0.6963
+2025-09-09 12:12:28,978 - RecyclingPrediction - INFO - Training XGBoost...
+2025-09-09 12:12:37,031 - RecyclingPrediction - INFO - XGBoost R²: 0.7756
+2025-09-09 12:12:37,031 - RecyclingPrediction - INFO - Building stacking ensemble...
+2025-09-09 12:12:51,187 - RecyclingPrediction - INFO - Stacking Ensemble R²: 0.9749
+2025-09-09 12:12:51,426 - RecyclingPrediction - INFO - Saved model to datasets/processed/trained_model.pkl
+2025-09-09 12:12:51,428 - RecyclingPrediction - INFO - Saved results to datasets/processed/hybrid_model_results.csv
+2025-09-09 12:12:51,429 - RecyclingPrediction - INFO - Generating visualizations...
+2025-09-09 12:12:52,651 - RecyclingPrediction - INFO - Saved performance plot to static/hybrid_model_performance.png
+2025-09-09 12:12:52,665 - RecyclingPrediction - INFO - Feature importance not plotted for Stacking Ensemble
+2025-09-09 12:12:52,665 - RecyclingPrediction - INFO - Model trained: Stacking Ensemble, R²: 0.9749
+2025-09-09 12:12:52,666 - RecyclingPrediction - INFO - Saving model artifacts...
+2025-09-09 12:12:52,667 - RecyclingPrediction - INFO - Saved model to datasets/processed/scaler.pkl
+2025-09-09 12:12:52,668 - RecyclingPrediction - INFO - Saved model to datasets/processed/selector.pkl
+2025-09-09 12:12:52,973 - RecyclingPrediction - INFO - Saved model to datasets/processed/trained_model.pkl
+2025-09-09 12:12:52,974 - RecyclingPrediction - INFO - Saved model to datasets/processed/model_name.pkl
+2025-09-09 12:12:52,974 - RecyclingPrediction - INFO - Reloading artifacts...
+2025-09-09 12:12:53,164 - RecyclingPrediction - INFO - Loaded model from datasets/processed/trained_model.pkl
+2025-09-09 12:12:53,174 - RecyclingPrediction - INFO - Loaded model from datasets/processed/scaler.pkl
+2025-09-09 12:12:53,184 - RecyclingPrediction - INFO - Loaded model from datasets/processed/selector.pkl
+2025-09-09 12:12:53,185 - RecyclingPrediction - INFO - Loaded model from datasets/processed/model_name.pkl
+2025-09-09 12:12:53,186 - RecyclingPrediction - INFO - Loaded model from datasets/processed/target_encodings.pkl
+2025-09-09 12:12:53,186 - RecyclingPrediction - INFO - All artifacts loaded successfully
+2025-09-09 12:12:53,209 - RecyclingPrediction - INFO - Model artifacts loaded successfully.
+2025-09-09 12:12:53,209 - RecyclingPrediction - INFO - Training completed successfully
+2025-09-09 12:12:53,209 - RecyclingPrediction - INFO - Training completed. Best model: Stacking Ensemble, R²: 0.9749
+2025-09-09 12:13:13,622 - RecyclingPrediction - INFO - POST /predict
+2025-09-09 12:13:13,626 - RecyclingPrediction - INFO - Predicting for single instance...
+2025-09-09 12:13:13,627 - RecyclingPrediction - INFO - Preprocessing data for prediction...
+2025-09-09 12:13:13,627 - RecyclingPrediction - INFO - Applying feature engineering for prediction...
+2025-09-09 12:13:13,638 - RecyclingPrediction - INFO - Feature engineering completed
+2025-09-09 12:13:13,640 - RecyclingPrediction - INFO - Preprocessed data shape: (1, 37)
+2025-09-09 12:13:13,643 - RecyclingPrediction - INFO - Making predictions with model: Stacking Ensemble
+2025-09-09 12:13:13,726 - RecyclingPrediction - INFO - Predictions completed. Shape: (1,)
+2025-09-09 12:13:13,727 - RecyclingPrediction - INFO - Single instance prediction completed: 68.30%
+2025-09-09 12:13:13,727 - RecyclingPrediction - INFO - Prediction: 68.30%
